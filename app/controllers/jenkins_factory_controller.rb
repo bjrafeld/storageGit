@@ -6,8 +6,7 @@ class JenkinsFactoryController < ApplicationController
   end
 
   def create
-  	JenkinsFactory.factories[params["id"]] = JenkinsFactory.new(create_params)
-  	@JenkinsFactory = JenkinsFactory.factories[params["id"]]
+  	@JenkinsFactory = JenkinsFactory.new(create_params)
   	@JenkinsFactory.save
   end
 
@@ -16,7 +15,7 @@ class JenkinsFactoryController < ApplicationController
   end
 
   def addJob
-  	JenkinsFactory.addJob(addJob_params)
+  	@JenkinsFactory.addJob(addJob_params)
   	render :create
   end
 
@@ -31,11 +30,8 @@ class JenkinsFactoryController < ApplicationController
   	end
 
   	def addJob_params
-  		params.require(:@JenkinsFactory).permit(:url, :name, :jobs, :id)
+  		params.require(:@JenkinsFactory).permit(:url, :name)
   	end
 
-  	def getJob(testname)
-  		@JenkinsFactory.getJob(getJob_params)
-  	end
 
 end
