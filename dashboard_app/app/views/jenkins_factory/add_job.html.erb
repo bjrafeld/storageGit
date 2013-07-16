@@ -1,0 +1,16 @@
+<h1>JenkinsFactory Add New</h1>
+<div style="text-align: center; margin-top: 20px">
+  <div class="span4 offset2">
+    <h2>Stay in touch.</h2>
+  </div>
+  <div class="span4">
+    <div>
+      <%= simple_form_for :@JenkinsFactory do |f| %>
+        <%= f.error_notification %>
+        <%= f.input :url, label: false, :placeholder => 'Jenkins URL' %>
+        <%= f.input :name, label: false, :placeholder => 'Test Name for Job' %>
+        <%= f.submit "Add Jenkins Job", :class => "btn btn-primary"%>
+      <% end %>
+    </div>
+  </div>
+</div>
