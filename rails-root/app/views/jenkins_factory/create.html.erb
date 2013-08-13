@@ -1,0 +1,24 @@
+<html>
+
+<div style="text-align: center; margin-top: 20px">
+	<h1>Project Quality Dashboard</h1>
+</div>
+<div style="text-align: center; margin-top: 20px">
+  <div class="span4 offset2">
+    <h2>Projects</h2>
+  </div>
+  <div class="span4">
+    <div>
+            <!--<%= i = 1 %>-->
+          	  <%= while !(JenkinsFactory.where(id: i).blank?) do %>
+          		<%= link_to "#{JenkinsFactory.find(i).factoryName}", :controller=> "jenkins_factory", :action=> "getInfo", :id=> "#{i}"%><br>
+          		<!--<%= i += 1 %>-->
+          	<%end%>
+    </div>
+  </div>
+  <div style="text-align: center; margin-top: 20px">
+  	<%= link_to "<button>Add Project</button>".html_safe, :controller=> "jenkins_factory", :action=> "index"%>
+  </div>
+</div>
+
+</html>

@@ -1,0 +1,83 @@
+<html>
+<head>
+<script type="text/javascript">
+function altRows(id){
+  if(document.getElementsByTagName){  
+    
+    var table = document.getElementById(id);  
+    var rows = table.getElementsByTagName("tr"); 
+     
+    for(i = 0; i < rows.length; i++){          
+      if(i % 2 == 0){
+        rows[i].className = "evenrowcolor";
+      }else{
+        rows[i].className = "oddrowcolor";
+      }      
+    }
+  }
+}
+window.onload=function(){
+  altRows('BuildInfo');
+}
+</script>
+
+<style type="text/css">
+table.altrowstable {
+  font-family: verdana,arial,sans-serif;
+  font-size:11px;
+  color:#333333;
+  border-width: 1px;
+  border-color: #a9c6c9;
+  border-collapse: collapse;
+}
+table.altrowstable th {
+  border-width: 1px;
+  padding: 8px;
+  border-style: solid;
+  border-color: #a9c6c9;
+}
+table.altrowstable td {
+  border-width: 1px;
+  padding: 8px;
+  border-style: solid;
+  border-color: #a9c6c9;
+}
+.oddrowcolor{
+  background-color:#d4e3e5;
+}
+.evenrowcolor{
+  background-color:#c3dde0;
+}
+</style>
+</head>
+<body>
+<h1>Jenkins Build Information</h1>
+<div style="text-align: center; margin-top: 20px">
+  <div class="span4 offset2">
+    <h2>Summary of Jenkins Job</h2>
+  </div>
+  <div class="span4">
+    <center><table class="altrowstable" id="BuildInfo">
+      <tr>
+        <th>Result</th><td><%="#{@JenkinsBuild.result}"%></td>
+      </tr>
+      <tr>
+        <th>Display Name</th><td><%="#{@JenkinsBuild.fullDisplayName}"%></td>
+      </tr>
+      <tr>
+        <th>Artifacts</th><td><%="#{@JenkinsBuild.artifacts}"%></td>
+      </tr>
+      <tr>
+        <th>Description</th><td><%="#{@JenkinsBuild.description}"%></td>
+      </tr>
+      <tr>
+        <th>Built On</th><td><%="#{@JenkinsBuild.builtOn}"%></td>
+      </tr>
+
+    </table><center>
+  </div>
+    <div style="margin-top: 20px">
+          <div style="text-align: left">
+      <%= link_to "<<<<Back", :controller=> "jenkins_job", :action=> "jobInfo", :id=> "#{@JenkinsBuild.jobID}"%></div>
+        </div>
+      </div>

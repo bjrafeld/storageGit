@@ -1,0 +1,136 @@
+<html>
+<head>
+<script type="text/javascript">
+function altRows(id){
+  if(document.getElementsByTagName){  
+    
+    var table = document.getElementById(id);  
+    var rows = table.getElementsByTagName("tr"); 
+     
+    for(i = 0; i < rows.length; i++){          
+      if(i % 2 == 0){
+        rows[i].className = "evenrowcolor";
+      }else{
+        rows[i].className = "oddrowcolor";
+      }      
+    }
+  }
+}
+window.resize=function(){
+  altRows('JenkinsJobsCompare');
+}
+
+window.onload = resize;
+window.onresize = resize;
+
+function onCheck(element, id) {
+  var checked = element.checked
+
+}
+</script>
+<style type="text/css">
+table.altrowstable {
+  font-family: verdana,arial,sans-serif;
+  font-size:11px;
+  color:#333333;
+  border-width: 1px;
+  border-color: #a9c6c9;
+  border-collapse: collapse;
+}
+table.altrowstable th {
+  border-width: 1px;
+  padding: 8px;
+  border-style: solid;
+  border-color: #a9c6c9;
+}
+table.altrowstable td {
+  border-width: 1px;
+  padding: 8px;
+  border-style: solid;
+  border-color: #a9c6c9;
+}
+.oddrowcolor{
+  background-color:#d4e3e5;
+}
+.evenrowcolor{
+  background-color:#c3dde0;
+}
+
+#progress-failed {
+    background: red;
+    -webkit-border-radius: 10px;
+    height: 25px;
+    width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#progress-passed {
+    background: green;
+    width: 0%;
+    height: 100%;
+    -webkit-border-radius: 10px;
+}
+</style>
+</head>
+<body>
+
+<center><h1><%="#{@JenkinsFactory.factoryName}" %> Information</h1></center>
+<div style="text-align: center; margin-top: 20px">
+  <div class="span4 offset2">
+    <h2>General Test Information</h2>
+  </div>
+  <div class="span4">
+    <div style="margin-top: 30px; margin-bottom: 15px" id="progress-failed">
+      <%= tag("div", id: "progress-passed", style: "width: #{@JenkinsFactory.passedPercentage}%")%></div>
+    </div>
+    <h2><%= "#{@JenkinsFactory.passedPercentage}% Tests Passed"%></h2>
+    <div>
+      <%= "Number of Test Passed: #{@JenkinsFactory.numTestsPassed}" %><br>
+      <%= "Number of Test Failed: #{@JenkinsFactory.numTestsFailed}" %><br>
+      <%= "Number of Test Skipped: #{@JenkinsFactory.numTestsSkipped}" %><br><br>
+    </div>
+  </div>
+</div>
+
+
+<div style="text-align: center; margin-top: 20px">
+  <div class="span4 offset2">
+    <h2>Jenkins Job Information</h2>
+  </div>
+</div>
+<center><table class="altrowstable" id="JenkinsJobsCompare">
+<tr>
+  <th></th><th>Job Name</th><th>Display Name</th><th>Status</th><th>OS</th><th>Last Build</th><th>Passed %</th><th>Previous Builds</th><th></th><th>Last Updated</th><th></th>
+</tr>
+<!--<%= i = 1 %>-->
+  <%= form_tag(method: "post") do%>
+  <%= while !(JenkinsJob.where(id: i).blank?) do %>
+    <!--<% if JenkinsJob.find(i).factoryID == @JenkinsFactory.id%>-->
+        <tr>
+          <td><%= check_box_tag(:"#{JenkinsJob.find(i).testname}","true", JenkinsJob.find(i).attached)%></td>
+          <td><%= link_to "#{JenkinsJob.find(i).testname}", :controller=> "jenkins_job", :action=> "jobInfo", :id=> "#{i}"%></td>
+          <td><%= "#{JenkinsJob.find(i).displayName}"%></td>
+          <%= tag("td", bgcolor: "#{JenkinsJob.find(i).getColor}")%><%= "#{JenkinsJob.find(i).status}"%></td>
+          <td><%= "#{JenkinsJob.find(i).OS}"%></td>
+          <td><%= "#{JenkinsJob.find(i).LastBuildNum}"%></td>
+          <td><%= "#{JenkinsJob.find(i).passedPercentage}%"%></td>
+          <td><%= "#{JenkinsJob.find(i).getPreviousBuildNum}: #{JenkinsJob.find(i).getPreviousBuildResult}"%></td>
+          <td><%= "#{JenkinsJob.find(i).getThirdBuildNum}: #{JenkinsJob.find(i).getThirdBuildResult}"%></td>
+          <td><%= "#{JenkinsJob.find(i).lastUpdate}"%></td>
+          <td><%= link_to "Update", :controller=> "jenkins_factory", :action=> "updateJob", :jobID=> "#{i}", :class => 'btn btn-primary'%></td>
+        </tr>
+      <%end%>
+<!--<%= i += 1 %>-->
+  <%end%>
+  <tr><td><input type="submit" value="Submit"><%end%></td></tr>
+</table></center>
+  <div style="margin-top: 20px">
+    <div style="text-align: center">
+      <%= link_to "Add Job", :controller=> "jenkins_factory", :action=> "addJob", :id=> "#{@JenkinsFactory.id}", :class => 'btn btn-primary'%>
+      <div style="text-align: left">
+      <%= link_to "<<<<Back", :controller=> "jenkins_factory", :action=> "home"%></div>
+    </div>
+  </div>
+</body>
+</html>

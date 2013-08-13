@@ -1,0 +1,15 @@
+<h1>Get Jenkins Build</h1>
+<div style="text-align: center; margin-top: 20px">
+  <div class="span4 offset2">
+    <h2>Get New Jenkins Build.</h2>
+  </div>
+  <div class="span4">
+    <div>
+      <%= simple_form_for :@JenkinsFactory do |f| %>
+        <%= f.error_notification %>
+        <%= f.input :number, label: false, :placeholder => 'Build Number' %>
+        <%= f.submit "Get Jenkins Build", :class => "btn btn-primary"%>
+      <% end %>
+    </div>
+  </div>
+</div>
