@@ -17,6 +17,7 @@ function altRows(id){
   }
 }
 window.resize=function(){
+  document.body.style.cursor="default"
   altRows('JenkinsJobsCompare');
 }
 
@@ -73,7 +74,7 @@ table.altrowstable td {
 }
 </style>
 </head>
-<body>
+<body style="cursor:wait">
 
 <center><h1><%="#{@JenkinsFactory.factoryName}" %> Information</h1></center>
 <div style="text-align: center; margin-top: 20px">
